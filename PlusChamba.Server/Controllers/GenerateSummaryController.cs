@@ -9,6 +9,7 @@ using Azure;
 using Azure.AI.Inference;
 using Microsoft.AspNetCore.Mvc;
 using PlusChamba.Server.Models;
+using System.Text.RegularExpressions;
 
 namespace PlusChamba.Server.Controllers;
 
@@ -65,7 +66,7 @@ public class GenerateSummaryController : ControllerBase
             };
 
             var response = await client.CompleteAsync(options);
-            var summary = response.Value.Content;
+            var summary = NormalizeSummary(response.Value.Content);
 
             _logger.LogInformation("Summary generated successfully. Tokens used: {Tokens}", 
                 response.Value.Usage?.TotalTokens ?? 0);
@@ -200,5 +201,26 @@ public class GenerateSummaryController : ControllerBase
         prompt.AppendLine("Genera el resumen para mi Daily Stand-up basado en esta información.");
 
         return prompt.ToString();
+    }
+
+    private static string NormalizeSummary(string summary)
+    {
+        if (string.IsNullOrWhiteSpace(summary))
+        {
+            return summary;
+        }
+
+        if (summary.Contains('\n'))
+        {
+            return summary.Replace("\r\n", "\n").Replace("\r", "\n");
+        }
+
+        var normalized = summary;
+        normalized = normalized.Replace("📋 **Ayer**", "📋 **Ayer**\n");
+        normalized = normalized.Replace("🎯 **Hoy**", "\n\n🎯 **Hoy**\n");
+        normalized = normalized.Replace("🚧 **Bloqueos**", "\n\n🚧 **Bloqueos**\n");
+        normalized = Regex.Replace(normalized, @"\s-\s", "\n- ");
+
+        return normalized.Trim();
     }
 }
