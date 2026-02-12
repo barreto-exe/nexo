@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <!-- Gradiente de azul oscuro a verde turquesa -->
+    <linearGradient id="bgGradient16" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="50%" stop-color="#2d8a9e"/>
+      <stop offset="100%" stop-color="#3cb371"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo con esquinas redondeadas -->
+  <rect x="0" y="0" width="16" height="16" rx="3.5" ry="3.5" fill="url(#bgGradient16)"/>
+  
+  <!-- Tres círculos blancos en disposición triangular -->
+  <circle cx="8" cy="5.5" r="2" fill="#FFFFFF"/>
+  <circle cx="5.5" cy="10.5" r="2" fill="#FFFFFF"/>
+  <circle cx="10.5" cy="10.5" r="2" fill="#FFFFFF"/>
+</svg>

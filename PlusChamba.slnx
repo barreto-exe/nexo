@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="pluschamba.client/pluschamba.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="PlusChamba.Server/PlusChamba.Server.csproj" />
+</Solution>
